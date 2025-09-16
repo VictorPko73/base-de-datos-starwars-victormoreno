@@ -1,10 +1,10 @@
 from eralchemy2 import render_er
 
-# Import Base from your models
-from models import Base
+# Import the Flask-SQLAlchemy Model base
+from models import db
 
 if __name__ == "__main__":
-    # Generate the ER diagram from SQLAlchemy's Base metadata
+    # Generate the ER diagram using Flask-SQLAlchemy's declarative base (db.Model)
     # The output will be saved as 'diagram.png' in the project root
-    render_er(Base, 'diagram.png')
+    render_er(db.Model, 'diagram.png')
     print("Database diagram generated: diagram.png")
