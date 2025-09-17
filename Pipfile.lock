@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "390e98faa466da0f3ac0ffb0a8ba0b0724df778ac21cb0f926598c604e4ba505"
+            "sha256": "bc88b58ee9072420ce70286d6878c08f06cb3a4c2181739dfee020e50dcb418b"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -39,6 +39,15 @@
             ],
             "markers": "python_version >= '3.10'",
             "version": "==8.2.1"
+        },
+        "eralchemy2": {
+            "hashes": [
+                "sha256:1c1ee49b26287a459c5c89aa3eba3d6a9d1b8e6bd245d9fbacc6b15560fc66a5",
+                "sha256:be3ecd4e696172fe4b439a3010b08564c6f7c7323b9e9b4369e47da7a7b48428"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.8'",
+            "version": "==1.4.1"
         },
         "flask": {
             "hashes": [
@@ -258,6 +267,13 @@
             "index": "pypi",
             "markers": "python_version >= '3.8'",
             "version": "==2.9.10"
+        },
+        "pygraphviz": {
+            "hashes": [
+                "sha256:c10df02377f4e39b00ae17c862f4ee7e5767317f1c6b2dfd04cea6acc7fc2bea"
+            ],
+            "markers": "python_version >= '3.10'",
+            "version": "==1.14"
         },
         "python-dotenv": {
             "hashes": [
