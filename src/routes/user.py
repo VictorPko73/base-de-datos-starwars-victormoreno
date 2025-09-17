@@ -56,7 +56,7 @@ def get_all_users():
 
 
 
-# Obtener los usuarios favoritos
+# Obtener los favoritos del un usuario
 
 @user_bp.route('/users/favorites', methods=['GET'])
 def get_user_favorites():
