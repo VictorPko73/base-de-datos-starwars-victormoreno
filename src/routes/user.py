@@ -54,7 +54,10 @@ def get_all_users():
         return jsonify({"message": "No Existen Usuarios"}), 404
     
 
-    
+
+
+# Obtener los usuarios favoritos
+
 @user_bp.route('/users/favorites', methods=['GET'])
 def get_user_favorites():
     user_id = request.args.get('user_id')
@@ -71,7 +74,7 @@ def get_user_favorites():
     if not usuario:
         return jsonify({"message": "Usuario no encontrado"}), 404
     
-    # Obtener favoritos del usuario
+    # Obtener favoritos del usuario (http://localhost:3000/users/favorites?user_id=1)
     favoritos = Favorito.query.filter_by(usuario_id=user_id).all()
     
     if not favoritos:
@@ -95,7 +98,8 @@ def get_user_favorites():
     return jsonify(resultado), 200
 
 
-#Agregar planeta a favoritos del usuario actual
+#Agregar planeta a favoritos del usuario actual (http://localhost:3000/favorite/planet/1?user_id=1)
+
 @user_bp.route('/favorite/planet/<int:planet_id>', methods=['POST'])
 def add_favorite_planet(planet_id):
     # Obtener el ID del usuario desde query parameter
@@ -148,7 +152,8 @@ def add_favorite_planet(planet_id):
     
     
     
-# Agregar personaje a favoritos del usuario actual
+# Agregar personaje a favoritos del usuario actual  (http://localhost:3000/favorite/people/1?user_id=1)
+
 @user_bp.route('/favorite/people/<int:people_id>', methods=['POST'])
 def add_favorite_people(people_id):
     # Obtener el ID del usuario desde query parameter
@@ -200,7 +205,7 @@ def add_favorite_people(people_id):
     
     
 
-# Eliminar planeta de favoritos del usuario actual
+# Eliminar planeta de favoritos del usuario actual (http://localhost:3000/favorite/planet/1?user_id=1)
 @user_bp.route('/favorite/planet/<int:planet_id>', methods=['DELETE'])
 def delete_favorite_planet(planet_id):
     # Obtener el ID del usuario desde query parameter
@@ -235,3 +240,40 @@ def delete_favorite_planet(planet_id):
     
     # Respuesta exitosa
     return jsonify({"message": "Planeta eliminado de favoritos exitosamente"}), 200
+
+
+# Eliminar personaje de favoritos del usuario actual (http://localhost:3000/favorite/people/1?user_id=1)
+@user_bp.route('/favorite/people/<int:people_id>', methods=['DELETE'])
+def delete_favorite_people(people_id):
+    # Obtener el ID del usuario desde query parameter
+    user_id = request.args.get('user_id')
+    if not user_id:
+        return jsonify({"message": "Falta user_id en query"}), 400
+    
+    # Convertir user_id a entero y validar
+    try:
+        user_id = int(user_id)
+    except ValueError:
+        return jsonify({"message": "user_id debe ser un número"}), 400
+    
+    # Verificar que el usuario existe en la base de datos
+    usuario = Usuario.query.get(user_id)
+    if not usuario:
+        return jsonify({"message": "Usuario no encontrado"}), 404
+    
+    # Buscar el favorito específico del usuario para ese personaje
+    favorito = Favorito.query.filter_by(
+        usuario_id=user_id, 
+        personaje_id=people_id
+    ).first()
+    
+    # Si no existe el favorito, devolver error
+    if not favorito:
+        return jsonify({"message": "Favorito de personaje no encontrado para este usuario"}), 404
+    
+    # Eliminar el favorito de la base de datos
+    db.session.delete(favorito)
+    db.session.commit()
+    
+    # Respuesta exitosa
+    return jsonify({"message": "Personaje eliminado de favoritos exitosamente"}), 200
